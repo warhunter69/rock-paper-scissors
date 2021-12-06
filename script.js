@@ -26,26 +26,30 @@ function playRound(playerSelection, computerSelection) {
             break;
         case "rockpaper":
             result = "You Lose! Paper beats Rock";
-          
+            cpuScore += 1;
             break;
         case "rockscissors":
             result = "You Win! Rock beats Scissors";
+            playerScore += 1;
             break;
         case "paperpaper":
             result = "Draw! Paper and Paper";
             break; 
         case "paperrock":
             result = "You Win! Paper beats ROCK";
+            playerScore += 1;
             break; 
         case "paperscissors":
             result = "You Lose! scissors beats Paper";
-
+            cpuScore += 1;
             break; 
         case "scissorsrock":
             result = "You Lose! Rock beats Scissors";
+            cpuScore += 1;
             break; 
         case "scissorspaper":
             result = "You Win! Scissors beats Paper";
+            playerScore += 1;
 
             break;
         case "scissorsscissors":
@@ -73,32 +77,33 @@ function Select(number){
     return playerSelection;
 
 }
-function game (){
-   
-   
-    
-    
-    for (let i = 0; i < 5; i++) {
-        
-        
-        
-        do {
-          var number = prompt("Please enter 0 for Rock ,/n 1 for Paper ,/n 2 for Scissors", 0);
-          var computerSelection = ComputerPlay();
-          var playerSelection = Select(number);
-          
-        } while (number > 2);
-        console.log(playerSelection)
-        console.log(computerSelection);
-        console.log(playRound(playerSelection, computerSelection));
-      }
 
+var rounds = 0;
+var playerScore = 0;
+var cpuScore = 0;
+function game(playerSelection){
+    let computerSelection = ComputerPlay();
+    let message = playRound(playerSelection, computerSelection);
+    div = document.querySelector('#message')//.innerHTML = message;
+    div_scoreBoard = document.querySelector('#scoreBoard').innerHTML = `${playerScore} - ${cpuScore}`
+    if(playerScore === 5){
+        div.innerHTML = "You Win! cpu loses"
+        playerScore=0;
+        cpuScore=0;
+    }else if(cpuScore === 5){
+        div.innerHTML = "You lose! cpu wins"
+        playerScore=0;
+        cpuScore=0;
+    } 
+    console.log(playerScore);
 }
 
-  
-// //const playerSelection = "rock";
+document.addEventListener('DOMContentLoaded', function() {
 
-// const computerSelection = ComputerPlay();
-// console.log(computerSelection )
-// console.log(playRound(playerSelection, computerSelection));
-console.log(game())
+    // Use buttons to toggle between views
+    document.querySelector('#rock').addEventListener('click', () => game('rock'));
+    document.querySelector('#paper').addEventListener('click', () => game('paper'));
+    document.querySelector('#scissors').addEventListener('click', () => game('scissors'));
+    
+  
+  });
